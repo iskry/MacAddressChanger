@@ -21,5 +21,7 @@ def changeMac(interface, newMac):
     subprocess.call("ifconfig " + interface + " up", shell=True)
 
 options = getArguments()
-changeMac(options.interface, options.newMac)
+# changeMac(options.interface, options.newMac)
 
+ifconfigResult = subprocess.check_output(["ifconfig", options.interface])
+print(ifconfigResult)
