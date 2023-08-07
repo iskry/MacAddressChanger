@@ -35,7 +35,7 @@ def getcurrentMac(interface):
 
 options = getArguments()
 currentMac = getcurrentMac(options.interface)
-print("Current MAC = " + currentMac)
+print("Current MAC = " + str(currentMac))
 # changeMac(options.interface, options.newMac)
 
 
