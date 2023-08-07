@@ -28,4 +28,8 @@ ifconfigResult = subprocess.check_output(["ifconfig", options.interface])
 print(ifconfigResult)
 
 macAddressSearch = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifconfigResult)
-print(macAddressSearch.group(0))
+
+if macAddressSearch:
+    print(macAddressSearch.group(0))
+else:
+    print("[-] Could not read MAC address")
