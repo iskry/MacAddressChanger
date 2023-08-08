@@ -16,17 +16,16 @@ def getArguments():
     return options
 
 def changeMac(interface, newMac):
-    print("[+} Changing MAC addres for " + interface + " to " + newMac)
+    print("[+} Changing MAC address for " + interface + " to " + newMac)
     subprocess.call("ifconfig " + interface + " down", shell=True)
     subprocess.call("ifconfig " + interface + " hw ether " + newMac, shell=True)
     subprocess.call("ifconfig " + interface + " up", shell=True)
-
-    parser.error("[-] Please specify an interface, use --help for more info.")
+  
 
 def getcurrentMac(interface):
     ifconfigResult = subprocess.check_output(["ifconfig", interface])
 
-    macAddressSearch = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifconfigResult)
+    macAddressSearch = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", str(ifconfigResult))
 
     if macAddressSearch:
         return macAddressSearch.group(0)
@@ -34,8 +33,14 @@ def getcurrentMac(interface):
         print("[-] Could not read MAC address")
 
 options = getArguments()
+
 currentMac = getcurrentMac(options.interface)
 print("Current MAC = " + str(currentMac))
-# changeMac(options.interface, options.newMac)
 
+changeMac(options.interface, options.newMac)
 
+currentMac = getcurrentMac(options.interface)
+if currentMac == options.newMac:
+    print("[+] Mac address was successfully changed to " + currentMac)
+else:
+    print("[-] MAC address did not get changed.")
